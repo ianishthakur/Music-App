@@ -1,0 +1,5 @@
+{
+    "C_Cpp.errorSquiggles": "Disabled",
+    "cmake.sourceDirectory": "${workspaceFolder}/windows/flutter",
+    "java.configuration.updateBuildConfiguration": "interactive"
+}

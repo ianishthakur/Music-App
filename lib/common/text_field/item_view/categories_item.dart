@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:music_app/common/constant/routes_strings.dart';
 import 'package:music_app/common/constant/strings.dart';
+import 'package:music_app/common/route/route_arguments.dart';
 import 'package:music_app/common/utils/common_listview.dart';
+import 'package:music_app/feature/models/music_model.dart';
 
 class CategoriesItem extends StatelessWidget {
   CategoriesItem({super.key});
@@ -28,7 +31,9 @@ class CategoriesItem extends StatelessWidget {
             item: categoriesList,
             itemBuilder: (BuildContext context, index) {
               return InkWell(
-                onTap: () {},
+                onTap: () {
+                 
+                },
                 child: Container(
                   margin: EdgeInsets.only(right: 8),
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),

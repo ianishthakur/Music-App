@@ -6,6 +6,8 @@ import 'package:music_app/feature/models/music_model.dart';
 import 'package:music_app/feature/services/music_services.dart';
 
 import '../../constant/assets.dart';
+import '../../constant/routes_strings.dart';
+import '../../route/route_arguments.dart';
 
 class PlayListItem extends StatelessWidget {
   const PlayListItem({
@@ -53,7 +55,13 @@ class PlayListItem extends StatelessWidget {
                 return Container(
                   child: Stack(
                     children: [
-                      Container(
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, RoutesStrings.selectedMusicPlaying,
+                              arguments:
+                                  MusicArguments(musicModel: item[index]));
+                        },
                         child: Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),

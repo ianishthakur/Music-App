@@ -1,10 +1,16 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:music_app/common/route/route_generator.dart';
 import 'package:music_app/feature/models/music_model.dart';
 
 import '../common/constant/assets.dart';
 import '../common/constant/routes_strings.dart';
+import '../common/constant/strings.dart';
 import '../common/text_field/item_view/categories_item.dart';
 import '../common/text_field/item_view/playlists_item.dart';
 import '../common/text_field/item_view/recently_item.dart';
@@ -33,13 +39,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late StreamSubscription subscription;
+  var isDeviceConnected = false;
+  bool isAlertSet = false;
   List<Results> data = [];
 
   @override
   void initState() {
+    getConnectivity();
     getData();
     super.initState();
   }
+
+  getConnectivity() =>
+      subscription = Connectivity().onConnectivityChanged.listen(
+        (ConnectivityResult result) async {
+          isDeviceConnected = await InternetConnectionChecker().hasConnection;
+          if (!isDeviceConnected && isAlertSet == false) {
+            showDialogBox();
+            setState(() => isAlertSet = true);
+          }
+        },
+      );
 
   Future getData() async {
     var datas = await MusicServices().getData();
@@ -55,8 +76,6 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           toolbarHeight: 80,
           backgroundColor: Color(0xFF222c33),
-          // Color.fromARGB(255, 235, 230, 244),
-          // Color.fromARGB(255, 235, 230, 244),
           elevation: 0,
           automaticallyImplyLeading: false,
           leadingWidth: 0,
@@ -76,19 +95,17 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Container(
                             width: 200,
-                            child: Text(
-                              ("Hello, ") + widget.username,
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.grey),
-                            ),
+                            child: Text(Strings.hello + widget.username,
+                                style: GoogleFonts.bitter(
+                                    textStyle: const TextStyle(
+                                        fontSize: 14, color: Colors.grey))),
                           ),
                           Container(
                             width: 200,
-                            child: Text(
-                              widget.useremail,
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.white),
-                            ),
+                            child: Text(widget.useremail,
+                                style: GoogleFonts.bitter(
+                                    textStyle: const TextStyle(
+                                        fontSize: 18, color: Colors.white))),
                           ),
                         ],
                       ),
@@ -117,12 +134,12 @@ class _HomePageState extends State<HomePage> {
                 width: double.infinity,
                 decoration: const BoxDecoration(
                     color: Color(0xFF222c33),
-                    // color: Color.fromARGB(255, 235, 230, 244),
+                
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(50),
                         bottomRight: Radius.circular(50))),
                 child: Text(
-                  "Music",
+                  Strings.music,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.greatVibes(
                     textStyle: TextStyle(color: Colors.white, fontSize: 38),
@@ -157,4 +174,26 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+  showDialogBox() => showCupertinoDialog<Strings>(
+        context: context,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: const Text(Strings.noConnection),
+          content: const Text(Strings.checkUrInternet),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context);
+                setState(() => isAlertSet = false);
+                isDeviceConnected =
+                    await InternetConnectionChecker().hasConnection;
+                if (!isDeviceConnected) {
+                  showDialogBox();
+                  setState(() => isAlertSet = true);
+                }
+              },
+              child: const Text(Strings.ok),
+            ),
+          ],
+        ),
+      );
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RegisterTextField extends StatelessWidget {
   const RegisterTextField({
@@ -10,7 +11,8 @@ class RegisterTextField extends StatelessWidget {
     this.focusNode,
     this.textInputAction = TextInputAction.next,
     this.keyboardType = TextInputType.text,
-    this.prefixIcon, required this.label,
+    this.prefixIcon,
+    required this.label, this.validator,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -18,6 +20,7 @@ class RegisterTextField extends StatelessWidget {
   final String hintText;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
+  final String? Function(String?)? validator;
   final FocusNode? focusNode;
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
@@ -27,32 +30,43 @@ class RegisterTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: TextStyle(fontSize: 16, color: Colors.grey)),
+        Container(
+          margin: const EdgeInsets.only(bottom: 6.0),
+          child: Text(label,
+              style: GoogleFonts.bitter(
+                  textStyle: const TextStyle(
+                color: Colors.grey,
+                fontSize: 16,
+              ))),
+        ),
         TextFormField(
           autovalidateMode: AutovalidateMode.disabled,
           controller: controller,
           obscureText: obscureText,
           focusNode: focusNode,
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+          style: GoogleFonts.bitter(
+              textStyle:
+                  const TextStyle(fontWeight: FontWeight.w500, fontSize: 14)),
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: TextStyle(fontSize: (14), color: Colors.grey),
-            border: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.black, width: 1),
+            hintStyle: const TextStyle(fontSize: (14), color: Colors.grey),
+            border: const UnderlineInputBorder(
+              borderSide: BorderSide(color: Color(0xFF222c33), width: 1),
             ),
-            focusedBorder: UnderlineInputBorder(
+            focusedBorder: const UnderlineInputBorder(
               borderSide: BorderSide(
-                color: Colors.black,
+                color: Color(0xFF222c33),
               ),
             ),
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
+                borderSide: const BorderSide(
                   width: 1,
-                  color: Colors.blue,
+                  color: Color(0xFF222c33),
                 ),
                 borderRadius: BorderRadius.circular(14)),
-                errorBorder:OutlineInputBorder(borderSide: BorderSide(width: 1,color: Colors.red),
-                borderRadius: BorderRadius.circular(14)) ,
+            errorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(width: 1, color: Colors.red),
+                borderRadius: BorderRadius.circular(14)),
             suffixIcon: suffixIcon,
             prefixIcon: prefixIcon,
           ),

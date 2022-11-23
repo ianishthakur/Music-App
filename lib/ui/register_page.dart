@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:music_app/common/constant/routes_strings.dart';
 import 'package:music_app/common/shared_pref/shared_pref.dart';
 import 'package:music_app/ui/home_page.dart';
@@ -16,7 +17,7 @@ class NavProps {
 }
 
 class RegisterPage extends StatefulWidget {
-  RegisterPage({Key? key}) : super(key: key);
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -59,26 +60,29 @@ class _RegisterPageState extends State<RegisterPage> {
                     padding: EdgeInsets.only(top: 20),
                     child: Column(
                       children: [
-                        const Text(
+                        Text(
                           "Hello Again!",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold),
+                          style: GoogleFonts.bitter(
+                              textStyle: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold)),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        const Text(
-                          "Welcome back you've been missed!",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                          ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0),
+                          child: Text("Welcome back you've been missed!",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.bitter(
+                                  textStyle: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ))),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Image.asset(
                           Assets.music,
                           height: 68,
@@ -89,10 +93,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       RegisterTextField(
@@ -103,7 +107,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         prefixIcon: Icon(Icons.person_outline_outlined),
                         label: "Name",
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       RegisterTextField(
@@ -111,14 +115,15 @@ class _RegisterPageState extends State<RegisterPage> {
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         hintText: "Enter Your Email",
-                        prefixIcon: Icon(Icons.email_outlined),
+                        prefixIcon: const Icon(Icons.email_outlined),
                         label: "Email",
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
                       MaterialButton(
                         onPressed: () {
+                          SharedPref.setUserLoggedIn(true);
                           Navigator.pushNamed(
                             context,
                             RoutesStrings.homePage,
@@ -128,54 +133,50 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           );
                         },
-                        color: Color(0xFF222c33),
-                        //  color: Color.fromARGB(255, 235, 230, 244),
-                        // color: Color.fromARGB(255, 35, 239, 219),
+                        color: const Color(0xFF222c33),
                         minWidth: 200,
                         height: 48,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
-                        child: const Text(
-                          "Log in",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        child: Text("Log in",
+                            style: GoogleFonts.bitter(
+                                textStyle: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold))),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
-                        children: const [
-                          Expanded(
+                        children: [
+                          const Expanded(
                             child: Divider(
                               thickness: 0.5,
                               indent: 10.0,
                               endIndent: 10.0,
-                              color: Colors.black,
+                              color: Color(0xFF222c33),
                               height: 10,
                             ),
                           ),
-                          Text(
-                            " Or continue with ",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                            ),
-                          ),
-                          Expanded(
+                          Text(" Or continue with ",
+                              style: GoogleFonts.bitter(
+                                  textStyle: const TextStyle(
+                                color: Color(0xFF222c33),
+                                fontSize: 14,
+                              ))),
+                          const Expanded(
                             child: Divider(
                               thickness: 0.5,
                               indent: 10.0,
                               endIndent: 10.0,
-                              color: Colors.black,
+                              color: Color(0xFF222c33),
                               height: 10,
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       Row(

@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_app/common/constant/strings.dart';
 import 'package:music_app/common/utils/common_listview.dart';
 import 'package:music_app/feature/models/music_model.dart';
 
+import '../../constant/assets.dart';
 import '../../constant/routes_strings.dart';
 import '../../route/route_arguments.dart';
 
@@ -17,14 +20,15 @@ class RecentlyItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          child: const Padding(
+          child: Padding(
             padding: EdgeInsets.only(top: 24.0, bottom: 10),
             child: Text(
-              "RECENTLY PLAYED",
-              style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500),
+              Strings.recentlyPlayed,
+              style: GoogleFonts.bitter(
+                  textStyle: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500)),
             ),
           ),
         ),
@@ -44,7 +48,7 @@ class RecentlyItem extends StatelessWidget {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: Colors.grey),
+                      border: Border.all(width: 1, color: Color(0xFF222c33)),
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.circular(20)),
                   height: MediaQuery.of(context).size.height * 0.08,
@@ -58,6 +62,15 @@ class RecentlyItem extends StatelessWidget {
                           image: NetworkImage(
                               item[index].artworkUrl100.toString()),
                           fit: BoxFit.fill,
+                          errorBuilder:(BuildContext context, Object exception,
+                    StackTrace? stackTrace) {
+                  if (exception is SocketException) {
+                    return Image.asset(Assets.placeholder);
+                  }
+                  return Text(exception.toString());
+
+                
+                },
                         ),
                       ),
                       Expanded(
@@ -69,21 +82,22 @@ class RecentlyItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                  child: Text(
-                                item[index].artistName.toString(),
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18,
-                                    overflow: TextOverflow.ellipsis),
-                              )),
+                                  child: Text(item[index].artistName.toString(),
+                                      style: GoogleFonts.bitter(
+                                          textStyle: const TextStyle(
+                                              color: Color(0xFF222c33),
+                                              fontSize: 18,
+                                              overflow:
+                                                  TextOverflow.ellipsis)))),
                               Container(
                                   child: Text(
-                                item[index].collectionName.toString(),
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                    overflow: TextOverflow.ellipsis),
-                              ))
+                                      item[index].collectionName.toString(),
+                                      style: GoogleFonts.bitter(
+                                          textStyle: const TextStyle(
+                                              color: Color(0xFF222c33),
+                                              fontSize: 14,
+                                              overflow:
+                                                  TextOverflow.ellipsis))))
                             ],
                           ),
                         ),

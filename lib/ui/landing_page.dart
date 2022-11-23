@@ -3,11 +3,34 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:music_app/common/constant/routes_strings.dart';
+import 'package:music_app/ui/register_page.dart';
 
 import '../common/constant/assets.dart';
+import '../common/shared_pref/shared_pref.dart';
 
-class LandingPage extends StatelessWidget {
+class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
+
+  @override
+  State<LandingPage> createState() => _LandingPageState();
+}
+
+class _LandingPageState extends State<LandingPage> {
+  @override
+  void initState() {
+    super.initState();
+    checkUserLoggedInStatus();
+  }
+
+  checkUserLoggedInStatus() async {
+    final isLoggedIn = await SharedPref.getIsUserLoggedIn();
+    if (isLoggedIn == false) {
+      Navigator.pushNamed(context, RoutesStrings.registerPage);
+      return;
+    }
+     Navigator.pushNamed(context, RoutesStrings.homePage,
+          arguments: NavProps(name: "Name", email: "Email"));
+  }
 
   @override
   Widget build(BuildContext context) {

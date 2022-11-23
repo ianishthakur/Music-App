@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Assets {
   static const _imagePath = "assets/images/";
 
-  static const hand = _imagePath + "hand.jpg";
+  static const hand = _imagePath+"hand.jpg";
   static const monkey = _imagePath + "monkey.jpg";
   static const musician = _imagePath + "musician.jpg";
 
@@ -16,5 +16,6 @@ class Assets {
   static const twitter = _imagePath + "twitter.png";
   static const facebook = _imagePath + "facebook.png";
     static const profile = _imagePath + "profile.png";
+    static const placeholder = _imagePath + "placeholder.png";
 
 }
